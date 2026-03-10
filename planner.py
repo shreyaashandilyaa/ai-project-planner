@@ -12,59 +12,65 @@ def generate_project_plan(feature_request):
     prompt = f"""
 You are a senior technical project manager.
 
-Convert the following feature request into a PROFESSIONAL project plan.
+Create a COMPLETE project plan from the following feature request.
 
 Feature Request:
 {feature_request}
 
-Generate the plan using clear markdown headings and bullet points.
+The response MUST contain ALL of the following sections.
 
-The output MUST contain the following sections:
+Use clear markdown headers exactly as written.
 
-# 1. Project Overview
-- Goal
-- Key user value
-- Short description of the feature
+---
 
-# 2. Key Milestones
+# Project Overview
+Explain the goal of the feature and the value to users.
+
+---
+
+# Key Milestones
 List the major phases of the project.
 
 Example:
-- Requirements & Planning
+- Planning
 - Design
 - Development
 - Testing
 - Launch
 
-# 3. Work Breakdown Structure (WBS)
+---
 
-For EACH milestone, create a detailed WBS.
+# Work Breakdown Structure (WBS)
+
+For EACH milestone, break the work into detailed tasks.
 
 Format example:
 
 ### Milestone: Design
 
 Product
-- Finalize product requirements
-- Define success metrics
+- Define requirements
+- Finalize PRD
 
 Design
 - Create wireframes
-- Create high-fidelity UI mockups
+- Create high-fidelity UI
 - Conduct usability review
 
 Engineering
 - Define architecture
-- Define API contracts
+- Define APIs
 
 QA
-- Define testing strategy
+- Define test strategy
 
-Each milestone should contain multiple tasks.
+Repeat this structure for multiple milestones.
 
-# 4. Resource Requirements
+---
 
-Estimate the team needed to deliver this project.
+# Resource Requirements
+
+List the team needed and how many of each role.
 
 Example format:
 
@@ -72,31 +78,32 @@ Example format:
 - UI/UX Designer: 1
 - Frontend Engineers: 2
 - Backend Engineers: 2
-- QA Engineers: 1
+- QA Engineer: 1
 - DevOps Engineer: 1
 
-Explain briefly what each role will handle.
+Explain briefly what each role will do.
 
-# 5. Dependencies
+---
 
-List external or internal dependencies.
+# Dependencies
 
-Examples:
-- Third-party APIs
-- Payment gateway integration
-- Data availability
-- Infrastructure setup
+List external dependencies such as:
+- APIs
+- Data sources
+- Integrations
+- Infrastructure
 
-# 6. Risks and Mitigation
+---
 
-Provide a list like:
+# Risks and Mitigation
 
-Risk:
-Mitigation:
+List major risks and how they will be mitigated.
 
-# 7. Suggested Timeline
+---
 
-Provide milestone durations.
+# Suggested Timeline
+
+Provide estimated duration for each milestone.
 
 Example:
 
@@ -106,13 +113,17 @@ Example:
 - Testing: 2 weeks
 - Launch: 1 week
 
-Make the output structured, readable, and suitable for a real project plan document.
+---
+
+IMPORTANT:
+Do NOT skip any section.
+Ensure the sections "Work Breakdown Structure (WBS)" and "Resource Requirements" are always included.
 """
 
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.3
+        temperature=0.2
     )
 
     return response.choices[0].message.content
