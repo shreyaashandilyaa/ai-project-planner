@@ -1,10 +1,17 @@
 from openai import OpenAI
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Read API key from either local .env or Streamlit Cloud secrets
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    api_key = st.secrets["OPENAI_API_KEY"]
+
+client = OpenAI(api_key=api_key)
 
 
 def generate_project_plan(feature_request):
@@ -58,3 +65,4 @@ DevOps Engineer: 1
     )
 
     return response.choices[0].message.content
+
