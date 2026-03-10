@@ -25,4 +25,5 @@ if generate:
             plan = generate_project_plan(feature_request)
 
         st.subheader("Generated Project Plan")
-        st.markdown(plan)
+        st.markdown(plan, unsafe_allow_html=True)
+
