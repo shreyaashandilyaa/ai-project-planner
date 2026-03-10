@@ -10,62 +10,108 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def generate_project_plan(feature_request):
 
     prompt = f"""
-You are an experienced technical project manager.
+You are a senior technical project manager.
 
-Convert the following feature request into a structured and detailed project plan.
+Convert the following feature request into a PROFESSIONAL project plan.
 
 Feature Request:
 {feature_request}
 
-Create the following sections:
+Generate the plan using clear markdown headings and bullet points.
 
-1. Project Overview
-   - Goal
-   - Key user value
-   - High-level feature description
+The output MUST contain the following sections:
 
-2. Key Milestones
-   Identify the major phases of the project.
+# 1. Project Overview
+- Goal
+- Key user value
+- Short description of the feature
 
-3. Work Breakdown Structure (WBS)
-   Break each milestone into detailed tasks.
+# 2. Key Milestones
+List the major phases of the project.
 
-   Organize tasks under categories:
-   - Product
-   - Design
-   - Engineering
-   - QA
+Example:
+- Requirements & Planning
+- Design
+- Development
+- Testing
+- Launch
 
-   Ensure tasks are actionable and realistic.
+# 3. Work Breakdown Structure (WBS)
 
-4. Resource Requirements
-   List the required team roles and how many people are needed.
+For EACH milestone, create a detailed WBS.
 
-   Example:
-   - Product Manager (1)
-   - Frontend Engineers (2)
-   - Backend Engineers (2)
-   - UI/UX Designer (1)
-   - QA Engineer (1)
-   - DevOps Engineer (1)
+Format example:
 
-5. Dependencies
-   Mention external systems, integrations, approvals, or infrastructure required.
+### Milestone: Design
 
-6. Risks
-   List key project risks and mitigation strategies.
+Product
+- Finalize product requirements
+- Define success metrics
 
-7. Suggested Timeline
-   Estimate duration for each milestone.
+Design
+- Create wireframes
+- Create high-fidelity UI mockups
+- Conduct usability review
 
-Format the output clearly using headings and bullet points so it reads like a professional project plan.
+Engineering
+- Define architecture
+- Define API contracts
+
+QA
+- Define testing strategy
+
+Each milestone should contain multiple tasks.
+
+# 4. Resource Requirements
+
+Estimate the team needed to deliver this project.
+
+Example format:
+
+- Product Manager: 1
+- UI/UX Designer: 1
+- Frontend Engineers: 2
+- Backend Engineers: 2
+- QA Engineers: 1
+- DevOps Engineer: 1
+
+Explain briefly what each role will handle.
+
+# 5. Dependencies
+
+List external or internal dependencies.
+
+Examples:
+- Third-party APIs
+- Payment gateway integration
+- Data availability
+- Infrastructure setup
+
+# 6. Risks and Mitigation
+
+Provide a list like:
+
+Risk:
+Mitigation:
+
+# 7. Suggested Timeline
+
+Provide milestone durations.
+
+Example:
+
+- Planning: 1 week
+- Design: 2 weeks
+- Development: 4 weeks
+- Testing: 2 weeks
+- Launch: 1 week
+
+Make the output structured, readable, and suitable for a real project plan document.
 """
 
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
+        messages=[{"role": "user", "content": prompt}],
         temperature=0.3
     )
 
