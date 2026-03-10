@@ -10,114 +10,45 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def generate_project_plan(feature_request):
 
     prompt = f"""
-You are a senior technical project manager.
-
-Create a COMPLETE project plan from the following feature request.
+Create a COMPLETE software project plan for the following feature request.
 
 Feature Request:
 {feature_request}
 
-The response MUST contain ALL of the following sections.
-
-Use clear markdown headers exactly as written.
-
----
+Use the following structure EXACTLY.
 
 # Project Overview
-Explain the goal of the feature and the value to users.
-
----
 
 # Key Milestones
-List the major phases of the project.
-
-Example:
-- Planning
-- Design
-- Development
-- Testing
-- Launch
-
----
 
 # Work Breakdown Structure (WBS)
 
-For EACH milestone, break the work into detailed tasks.
-
-Format example:
-
-### Milestone: Design
+For each milestone, break work into:
 
 Product
-- Define requirements
-- Finalize PRD
-
 Design
-- Create wireframes
-- Create high-fidelity UI
-- Conduct usability review
-
 Engineering
-- Define architecture
-- Define APIs
-
 QA
-- Define test strategy
 
-Repeat this structure for multiple milestones.
-
----
+Include detailed tasks.
 
 # Resource Requirements
 
-List the team needed and how many of each role.
+List team roles and number of people required.
 
-Example format:
-
-- Product Manager: 1
-- UI/UX Designer: 1
-- Frontend Engineers: 2
-- Backend Engineers: 2
-- QA Engineer: 1
-- DevOps Engineer: 1
-
-Explain briefly what each role will do.
-
----
+Example:
+Product Manager: 1
+UI/UX Designer: 1
+Frontend Engineers: 2
+Backend Engineers: 2
+QA Engineer: 1
+DevOps Engineer: 1
 
 # Dependencies
 
-List external dependencies such as:
-- APIs
-- Data sources
-- Integrations
-- Infrastructure
-
----
-
 # Risks and Mitigation
 
-List major risks and how they will be mitigated.
-
----
-
 # Suggested Timeline
-
-Provide estimated duration for each milestone.
-
-Example:
-
-- Planning: 1 week
-- Design: 2 weeks
-- Development: 4 weeks
-- Testing: 2 weeks
-- Launch: 1 week
-
----
-
-IMPORTANT:
-Do NOT skip any section.
-Ensure the sections "Work Breakdown Structure (WBS)" and "Resource Requirements" are always included.
 """
 
     response = client.chat.completions.create(
